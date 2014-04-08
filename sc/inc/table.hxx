@@ -333,11 +333,13 @@ public:
     void SetEditText( SCCOL nCol, SCROW nRow, const EditTextObject& rEditText, const SfxItemPool* pEditPool );
     SCROW GetFirstEditTextRow( SCCOL nCol1, SCROW nRow1, SCCOL nCol2, SCROW nRow2 ) const;
 
-    void SetEmptyCell( SCCOL nCol, SCROW nRow );
+    void SetEmptyCell( SCCOL nCol, SCROW nRow );//pose: specific to Table. Sets a cell empty
     void SetFormula(
         SCCOL nCol, SCROW nRow, const ScTokenArray& rArray, formula::FormulaGrammar::Grammar eGram );
+    //pose: specific to Table. Sets a Formula (like in excel) for a given cell.
     void SetFormula(
         SCCOL nCol, SCROW nRow, const OUString& rFormula, formula::FormulaGrammar::Grammar eGram );
+    //pose: specific to Table. Sets a Formula (like in excel) for a given cell.
 
     /**
      * Takes ownership of pCell
@@ -346,20 +348,29 @@ public:
      *         is deleted automatically on failure to insert.
      */
     ScFormulaCell* SetFormulaCell( SCCOL nCol, SCROW nRow, ScFormulaCell* pCell );
+    //pose: specific to tables
 
     bool SetFormulaCells( SCCOL nCol, SCROW nRow, std::vector<ScFormulaCell*>& rCells );
+    //pose: specific to tables
 
     svl::SharedString GetSharedString( SCCOL nCol, SCROW nRow ) const;
 
-    void        SetValue( SCCOL nCol, SCROW nRow, const double& rVal );
-    void SetValues( SCCOL nCol, SCROW nRow, const std::vector<double>& rVals );
-    void        SetError( SCCOL nCol, SCROW nRow, sal_uInt16 nError);
+    void        SetValue( SCCOL nCol, SCROW nRow, const double& rVal );//pose: specific to tables
+    void SetValues( SCCOL nCol, SCROW nRow, const std::vector<double>& rVals );//pose: specific to tables
+    void        SetError( SCCOL nCol, SCROW nRow, sal_uInt16 nError);//pose: specific to tables
     SCSIZE      GetPatternCount( SCCOL nCol ) const;
+    //pose:specific to table, implemented in table4.cxx. 
     SCSIZE      GetPatternCount( SCCOL nCol, SCROW nRow1, SCROW nRow2 ) const;
+    //pose:specific to table, implemented in table4.cxx.
     bool        ReservePatternCount( SCCOL nCol, SCSIZE nReserve );
+    //pose:specific to table, implemented in table4.cxx.
 
     void SetRawString( SCCOL nCol, SCROW nRow, const svl::SharedString& rStr );
+    //pose:specific to table. Fills a string into a cell
+    
     void        GetString( SCCOL nCol, SCROW nRow, OUString& rString ) const;
+    //pose:specific to table. returns the string stored in a cell into rstring.
+    
     double* GetValueCell( SCCOL nCol, SCROW nRow );
     void        GetInputString( SCCOL nCol, SCROW nRow, OUString& rString ) const;
     double      GetValue( const ScAddress& rPos ) const
